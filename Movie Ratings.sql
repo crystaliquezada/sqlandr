@@ -1,0 +1,1 @@
+SELECT * FROM `movie ratings`.`sql and r_movie ratings`;

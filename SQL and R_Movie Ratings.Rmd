@@ -1,0 +1,38 @@
+---
+title: "Importing MySQL Data into R Studio"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(DBI)      
+library(RMySQL)
+```
+
+```{r sql setup}
+host <- "localhost"
+user <- "root"
+password <- "abcd1234"
+dbname <- "movie ratings"
+```
+
+```{r sql connection}
+con <- dbConnect(RMySQL::MySQL(),
+                 host = host,
+                 user = user,
+                 password = password,
+                 dbname = dbname)
+```
+
+```{r sql data}
+query <- "SELECT `Person`, `Movie`, `Rating` FROM `movie ratings`.`sql and r_movie ratings`"
+df <- dbGetQuery(con, query)
+```
+
+```{r cleanup}
+df <- df[df$Rating != "NA", ]
+df
+```
+
+```{r disconnect}
+dbDisconnect(con)
+```
